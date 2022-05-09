@@ -34,10 +34,12 @@ static struct t_tap {
     tap_state_t l_brackets;
     tap_state_t r_brackets;
     tap_state_t quotes;
+    tap_state_t semicolon;
 } qk_tap_state = {
     .l_brackets  = 0,
     .r_brackets = 0,
     .quotes = 0,
+    .semicolon = 0,
 };
 
 /* Sentinel value for invalid tap dance exit */
@@ -168,11 +170,39 @@ void td_quotes_reset(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.quotes = 0;
 }
 
+void td_semicolon_finished(qk_tap_dance_state_t *state, void *user_data) {
+    qk_tap_state.semicolon = get_tapdance_state(state);
+    switch (qk_tap_state.semicolon) {
+        case SINGLE_TAP:
+            register_code16(KC_SEMICOLON);
+            break;
+        case DOUBLE_TAP:
+            SEND_STRING(SS_TAP(X_END)";");
+            break;
+        default:
+            break;
+    }
+}
+
+void td_semicolon_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (qk_tap_state.semicolon) {
+        case SINGLE_TAP:
+            unregister_code16(KC_SEMICOLON);
+            break;
+        case DOUBLE_TAP:
+            break;
+        default:
+            break;
+    }
+    qk_tap_state.semicolon = 0;
+}
+
 // Tap Dance Declarations
 enum tapdance_keycodes {
     TD_L_BRACKETS,
     TD_R_BRACKETS,
     TD_QUOTES,
+    TD_SEMICOLON,
 };
 
 // Tap Dance Definitions
@@ -185,11 +215,15 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
     // once: single quote, twice: double quote, thrice: backtick
     [TD_QUOTES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_quotes_finished, td_quotes_reset),
+
+    // once: semicolon, twice: end and semicolon
+    [TD_SEMICOLON] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_semicolon_finished, td_semicolon_reset),
 };
 
 #define TD_LBRK TD(TD_L_BRACKETS)
 #define TD_RBRK TD(TD_R_BRACKETS)
 #define TD_QUOT TD(TD_QUOTES)
+#define TD_SCLN TD(TD_SEMICOLON)
 
 // Layers
 
@@ -224,7 +258,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT_preonic_grid(
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
-    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
+    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    TD_SCLN, KC_ENT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
     BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
