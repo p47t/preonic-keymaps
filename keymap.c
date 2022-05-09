@@ -21,6 +21,7 @@
 // Tap dance
 
 typedef enum {
+    TAP_STATE_RESET,
     SINGLE_TAP,
     SINGLE_HOLD,
     DOUBLE_TAP,
