@@ -37,12 +37,22 @@ static struct t_tap {
     tap_state_t quotes;
     tap_state_t semicolon;
     tap_state_t grave;
+    tap_state_t lsft;
+    tap_state_t rsft;
+    tap_state_t lctl;
+    tap_state_t lalt;
+    tap_state_t lgui;
 } qk_tap_state = {
     .l_brackets = 0,
     .r_brackets = 0,
     .quotes = 0,
     .semicolon = 0,
     .grave = 0,
+    .lsft = 0,
+    .rsft = 0,
+    .lctl = 0,
+    .lalt = 0,
+    .lgui = 0,
 };
 
 /* Sentinel value for invalid tap dance exit */
@@ -232,6 +242,185 @@ void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.grave = 0;
 }
 
+void td_lsft_finished(qk_tap_dance_state_t *state, void *user_data) {
+    qk_tap_state.lsft = get_tapdance_state(state);
+    switch (qk_tap_state.lsft) {
+        case SINGLE_TAP:
+            register_code16(KC_MINUS);
+            break;
+        case SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_LSFT));
+            break;
+        case DOUBLE_TAP:
+            tap_code16(KC_LSFT);
+            register_code16(KC_LSFT);
+            break;
+        default:
+            break;
+    }
+}
+
+void td_lsft_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (qk_tap_state.lsft) {
+        case SINGLE_TAP:
+            unregister_code16(KC_MINUS);
+            break;
+        case SINGLE_HOLD:
+            unregister_mods(MOD_BIT(KC_LSFT));
+            break;
+        case DOUBLE_TAP:
+            unregister_code16(KC_LSFT);
+            break;
+        default:
+            break;
+    }
+    qk_tap_state.lsft = 0;
+}
+
+void td_rsft_finished(qk_tap_dance_state_t *state, void *user_data) {
+    qk_tap_state.rsft = get_tapdance_state(state);
+    switch (qk_tap_state.rsft) {
+        case SINGLE_TAP:
+            register_code16(KC_EQUAL);
+            break;
+        case SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_RSFT));
+            break;
+        case DOUBLE_TAP:
+            tap_code16(KC_RSFT);
+            register_code16(KC_RSFT);
+            break;
+        default:
+            break;
+    }
+}
+
+void td_rsft_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (qk_tap_state.rsft) {
+        case SINGLE_TAP:
+            unregister_code16(KC_EQUAL);
+            break;
+        case SINGLE_HOLD:
+            unregister_mods(MOD_BIT(KC_RSFT));
+            break;
+        case DOUBLE_TAP:
+            unregister_code16(KC_RSFT);
+            break;
+        default:
+            break;
+    }
+    qk_tap_state.rsft = 0;
+}
+
+void td_lctl_finished(qk_tap_dance_state_t *state, void *user_data) {
+    qk_tap_state.lctl = get_tapdance_state(state);
+    switch (qk_tap_state.lctl) {
+        case SINGLE_TAP:
+            register_code16(KC_LSFT);
+            register_code16(KC_LPRN);
+            break;
+        case SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_LCTL));
+            break;
+        case DOUBLE_TAP:
+            tap_code16(KC_LCTL);
+            register_code16(KC_LCTL);
+            break;
+        default:
+            break;
+    }
+}
+
+void td_lctl_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (qk_tap_state.lctl) {
+        case SINGLE_TAP:
+            unregister_code16(KC_LPRN);
+            unregister_code16(KC_LSFT);
+            break;
+        case SINGLE_HOLD:
+            unregister_mods(MOD_BIT(KC_LCTL));
+            break;
+        case DOUBLE_TAP:
+            unregister_code16(KC_LCTL);
+            break;
+        default:
+            break;
+    }
+    qk_tap_state.lctl = 0;
+}
+
+void td_lalt_finished(qk_tap_dance_state_t *state, void *user_data) {
+    qk_tap_state.lalt = get_tapdance_state(state);
+    switch (qk_tap_state.lalt) {
+        case SINGLE_TAP:
+            register_code16(KC_LBRC);
+            break;
+        case SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_LALT));
+            break;
+        case DOUBLE_TAP:
+            tap_code16(KC_LALT);
+            register_code16(KC_LALT);
+            break;
+        default:
+            break;
+    }
+}
+
+void td_lalt_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (qk_tap_state.lalt) {
+        case SINGLE_TAP:
+            unregister_code16(KC_LBRC);
+            break;
+        case SINGLE_HOLD:
+            unregister_mods(MOD_BIT(KC_LALT));
+            break;
+        case DOUBLE_TAP:
+            unregister_code16(KC_LALT);
+            break;
+        default:
+            break;
+    }
+    qk_tap_state.lalt = 0;
+}
+
+void td_lgui_finished(qk_tap_dance_state_t *state, void *user_data) {
+    qk_tap_state.lgui = get_tapdance_state(state);
+    switch (qk_tap_state.lgui) {
+        case SINGLE_TAP:
+            register_code16(KC_LSFT);
+            register_code16(KC_LCBR);
+            break;
+        case SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_LGUI));
+            break;
+        case DOUBLE_TAP:
+            tap_code16(KC_LGUI);
+            register_code16(KC_LGUI);
+            break;
+        default:
+            break;
+    }
+}
+
+void td_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (qk_tap_state.lgui) {
+        case SINGLE_TAP:
+            unregister_code16(KC_LCBR);
+            unregister_code16(KC_LSFT);
+            break;
+        case SINGLE_HOLD:
+            unregister_mods(MOD_BIT(KC_LGUI));
+            break;
+        case DOUBLE_TAP:
+            unregister_code16(KC_LGUI);
+            break;
+        default:
+            break;
+    }
+    qk_tap_state.lgui = 0;
+}
+
 // Tap Dance Declarations
 enum tapdance_keycodes {
     TD_L_BRACKETS,
@@ -240,6 +429,11 @@ enum tapdance_keycodes {
     TD_SEMICOLON,
     TD_SLASHES,
     TD_GRV,
+    TD_LEFT_SHIFT,
+    TD_RIGHT_SHIFT,
+    TD_LEFT_CTRL,
+    TD_LEFT_ALT,
+    TD_LEFT_GUI,
 };
 
 // Tap Dance Definitions
@@ -261,6 +455,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
     // once: `, twice: ~, thrice: `|`
     [TD_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_grave_finished, td_grave_reset),
+
+    [TD_LEFT_SHIFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lsft_finished, td_lsft_reset),
+    [TD_RIGHT_SHIFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_rsft_finished, td_rsft_reset),
+    [TD_LEFT_CTRL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lctl_finished, td_lctl_reset),
+    [TD_LEFT_ALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lalt_finished, td_lalt_reset),
+    [TD_LEFT_GUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lgui_finished, td_lgui_reset),
 };
 
 #define TD_LBRK TD(TD_L_BRACKETS)
@@ -268,7 +468,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TD_QUOT TD(TD_QUOTES)
 #define TD_SCLN TD(TD_SEMICOLON)
 #define TD_SLSH TD(TD_SLASHES)
-#define TD_GRV TD(TD_GRV)
+#define TD_GRV  TD(TD_GRV)
+#define TD_LSFT TD(TD_LEFT_SHIFT)
+#define TD_RSFT TD(TD_RIGHT_SHIFT)
+#define TD_LCTL TD(TD_LEFT_CTRL)
+#define TD_LALT TD(TD_LEFT_ALT)
+#define TD_LGUI TD(TD_LEFT_GUI)
 
 // Layers
 
@@ -288,13 +493,6 @@ enum preonic_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-// Mod-tap for easy - and =
-#define MT_LSFT MT(MOD_LSFT, KC_MINUS)
-#define MT_RSFT MT(MOD_RSFT, KC_EQUAL)
-#define MT_LCTL MT(MOD_LCTL, KC_LPRN)
-#define MT_LALT MT(MOD_LALT, KC_LBRC)
-#define MT_LGUI MT(MOD_LGUI, KC_LCBR)
-
 /* Qwerty
  * ,-----------------------------------------------------------------------------------------------.
  * |  Esc  |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |   0   | Bksp  |
@@ -312,8 +510,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
     TD_GRV,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    TD_SCLN, KC_ENT,
-    MT_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  TD_SLSH, MT_RSFT,
-    MICMUTE, MT_LCTL, MT_LALT, MT_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    TD_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  TD_SLSH, TD_RSFT,
+    MICMUTE, TD_LCTL, TD_LALT, TD_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Lower
@@ -333,7 +531,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
     KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_PIPE,
     KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______,
-    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______, KC_PLUS,
+    KC_UNDS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______, KC_PLUS,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
