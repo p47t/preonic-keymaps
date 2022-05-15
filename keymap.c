@@ -149,8 +149,7 @@ void td_quotes_finished(qk_tap_dance_state_t *state, void *user_data) {
             register_code16(KC_DOUBLE_QUOTE);
             break;
         case TRIPLE_TAP:
-            register_code16(KC_GRAVE);
-            break;
+            register_code16(KC_PIPE);
         default:
             break;
     }
@@ -165,7 +164,7 @@ void td_quotes_reset(qk_tap_dance_state_t *state, void *user_data) {
             unregister_code16(KC_DOUBLE_QUOTE);
             break;
         case TRIPLE_TAP:
-            unregister_code16(KC_GRAVE);
+            unregister_code16(KC_PIPE);
             break;
         default:
             break;
@@ -260,7 +259,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // once: slash, twice: back slash
     [TD_SLASHES] = ACTION_TAP_DANCE_DOUBLE(KC_SLASH, KC_BACKSLASH),
 
-    // once: `, twice: ~, thrice: ```
+    // once: `, twice: ~, thrice: `|`
     [TD_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_grave_finished, td_grave_reset),
 };
 
@@ -300,7 +299,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------------------.
  * |  Esc  |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |   0   | Bksp  |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |  Tab  |   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   | '"`   |
+ * |  Tab  |   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   |  '"|  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   `   |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   ;   | Enter |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
