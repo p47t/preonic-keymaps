@@ -324,17 +324,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   ~   |   ML  |   MD  |  MR   |       |       |       |   _   |   +   |   {   |   }   |       |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |   _   |   WL  |   WD  |  WU   |  WR   |       |       | ISO ~ | ISO | |  Home |  End  |   +   |
+ * |   _   |   WL  |   WD  |   WU  |  WR   |       |       |       |       |       |       |   +   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |               |       | Next  | Vol-  | Vol+  |  Play |
+ * |       |       |       |       |       |               |       | Home  | Pg Dn | Pg Up |  End |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
-    KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_DEL,
-    KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, _______,    _______,    KC_LBRC, KC_RBRC, KC_PIPE,
-    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, _______,
-    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, S(KC_NUHS), S(KC_NUBS), KC_HOME, KC_END,  KC_PLUS,
-    _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______, _______, _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY
+    KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
+    KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_PIPE,
+    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______,
+    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______, KC_PLUS,
+    _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
 /* Raise
