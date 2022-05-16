@@ -249,6 +249,7 @@ enum preonic_keycodes {
     LOWER = SAFE_RANGE,
     RAISE,
     BACKLIT,
+    TRAILING_SEMICOLON,
     MICMUTE, // mute microphone
 };
 
@@ -287,7 +288,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   ~   |   B1  |   MU  |  B2   |       |       |       |       |       |   [   |   ]   |   |   |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |   ~   |   ML  |   MD  |  MR   |       |       |       |   _   |   +   |   {   |   }   |       |
+ * |   ~   |   ML  |   MD  |  MR   |       |       |       |   _   |   +   |   {   |   }   | End+; |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
  * |   _   |   WL  |   WD  |   WU  |  WR   |       |       |       |       |       |       |   +   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -297,7 +298,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [LAYER_LOWER] = LAYOUT_preonic_grid(
     KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
     KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_PIPE,
-    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______,
+    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TRAILING_SEMICOLON,
     KC_UNDS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______, KC_PLUS,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
@@ -397,6 +398,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
         }
         return false;
+    case TRAILING_SEMICOLON:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_END)";"SS_TAP(X_ENTER));
+        }
+        break;
     case MICMUTE:
         if (record->event.pressed) {
            SEND_STRING(SS_LGUI("y")); // Cmd-Y for chime
