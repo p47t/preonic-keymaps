@@ -32,13 +32,9 @@ typedef enum {
 
 // Global TapDance State
 static struct t_tap {
-    tap_state_t l_brackets;
-    tap_state_t r_brackets;
     tap_state_t quotes;
     tap_state_t grave;
 } qk_tap_state = {
-    .l_brackets = 0,
-    .r_brackets = 0,
     .quotes = 0,
     .grave = 0,
 };
@@ -67,86 +63,6 @@ tap_state_t get_tapdance_state(qk_tap_dance_state_t *state) {
         }
     } else
         return TAP_DANCE_NO_MATCH;
-}
-
-void td_l_brackets_finished(qk_tap_dance_state_t *state, void *user_data) {
-    qk_tap_state.l_brackets = get_tapdance_state(state);
-    switch (qk_tap_state.l_brackets) {
-        case SINGLE_TAP:
-        case SINGLE_HOLD:
-            register_code16(KC_LEFT_PAREN);
-            break;
-        case DOUBLE_TAP:
-        case DOUBLE_HOLD:
-            register_code(KC_LBRACKET);
-            break;
-        case TRIPLE_TAP:
-        case TRIPLE_HOLD:
-            register_code16(KC_LEFT_CURLY_BRACE);
-            break;
-        default:
-            break;
-    }
-}
-
-void td_l_brackets_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (qk_tap_state.l_brackets) {
-        case SINGLE_TAP:
-        case SINGLE_HOLD:
-            unregister_code16(KC_LEFT_PAREN);
-            break;
-        case DOUBLE_TAP:
-        case DOUBLE_HOLD:
-            unregister_code(KC_LBRACKET);
-            break;
-        case TRIPLE_TAP:
-        case TRIPLE_HOLD:
-            unregister_code16(KC_LEFT_CURLY_BRACE);
-            break;
-        default:
-            break;
-    }
-    qk_tap_state.l_brackets = 0;
-}
-
-void td_r_brackets_finished(qk_tap_dance_state_t *state, void *user_data) {
-    qk_tap_state.r_brackets = get_tapdance_state(state);
-    switch (qk_tap_state.r_brackets) {
-        case SINGLE_TAP:
-        case SINGLE_HOLD:
-            register_code16(KC_RIGHT_PAREN);
-            break;
-        case DOUBLE_TAP:
-        case DOUBLE_HOLD:
-            register_code(KC_RBRACKET);
-            break;
-        case TRIPLE_TAP:
-        case TRIPLE_HOLD:
-            register_code16(KC_RIGHT_CURLY_BRACE);
-            break;
-        default:
-            break;
-    }
-}
-
-void td_r_brackets_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (qk_tap_state.r_brackets) {
-        case SINGLE_TAP:
-        case SINGLE_HOLD:
-            unregister_code16(KC_RIGHT_PAREN);
-            break;
-        case DOUBLE_TAP:
-        case DOUBLE_HOLD:
-            unregister_code(KC_RBRACKET);
-            break;
-        case TRIPLE_TAP:
-        case TRIPLE_HOLD:
-            unregister_code16(KC_RIGHT_CURLY_BRACE);
-            break;
-        default:
-            break;
-    }
-    qk_tap_state.r_brackets = 0;
 }
 
 void td_quotes_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -229,21 +145,13 @@ void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 // Tap Dance Declarations
 enum tapdance_keycodes {
-    TD_L_BRACKETS,
-    TD_R_BRACKETS,
     TD_QUOTES,
     TD_SLASHES,
-    TD_GRV,
+    TD_GRAVE,
 };
 
 // Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    // once: left parenthesis, twice: left bracket, thrice: left brace
-    [TD_L_BRACKETS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_l_brackets_finished, td_l_brackets_reset),
-
-    // once: right parenthesis, twice: right bracket, thrice: right brace
-    [TD_R_BRACKETS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_r_brackets_finished, td_r_brackets_reset),
-
     // once: single quote, twice: double quote, thrice: backtick
     [TD_QUOTES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_quotes_finished, td_quotes_reset),
 
@@ -251,14 +159,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SLASHES] = ACTION_TAP_DANCE_DOUBLE(KC_SLASH, KC_BACKSLASH),
 
     // once: `, twice: ~, thrice: `|`
-    [TD_GRV] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_grave_finished, td_grave_reset),
+    [TD_GRAVE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_grave_finished, td_grave_reset),
 };
 
-#define TD_LBRK TD(TD_L_BRACKETS)
-#define TD_RBRK TD(TD_R_BRACKETS)
 #define TD_QUOT TD(TD_QUOTES)
 #define TD_SLSH TD(TD_SLASHES)
-#define TD_GRV  TD(TD_GRV)
+#define TD_GRV  TD(TD_GRAVE)
 
 // Layers
 
