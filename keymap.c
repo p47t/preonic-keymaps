@@ -269,7 +269,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   `   |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |   ;   | Enter |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |Shift -|   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |  /\   |Shift =|
+ * | Shift |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |  /\   | Shift |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |MicMute| Ctrl (| Alt [ | GUI { |Lower  |     Space     | Raise | Left  | Down  |  Up   | Right |
  * `-----------------------------------------------------------------------------------------------'
@@ -278,7 +278,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
     TD_GRV,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
-    MT_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  TD_SLSH, MT_RSFT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  TD_SLSH, KC_RSFT,
     MICMUTE, MT_LCTL, MT_LALT, MT_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
@@ -286,20 +286,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------------------.
  * |   Del |   !   |   @   |   #   |   $   |   %   |   ^   |   &   |   *   |   (   |   )   |  Del  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |   ~   |   B1  |   MU  |  B2   |       |       |       |       |       |   [   |   ]   |   |   |
+ * |   ~   |   B1  |   MU  |  B2   |       |       |       |   _   |   +   |   [   |   ]   |   |   |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |   ~   |   ML  |   MD  |  MR   |       |       |       |   _   |   +   |   {   |   }   | End+; |
+ * |   ~   |   ML  |   MD  |  MR   |       |       |       |   -   |   =   |   {   |   }   | End+; |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |   _   |   WL  |   WD  |   WU  |  WR   |       |       |       |       |       |       |   +   |
+ * |   -   |   WL  |   WD  |   WU  |  WR   |       |       |       |       |       |       |   =   |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |               |       | Home  | Pg Dn | Pg Up |  End |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
     KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
-    KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_PIPE,
-    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, TRAILING_SEMICOLON,
-    KC_UNDS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______, KC_PLUS,
+    KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_PIPE,
+    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_MINS, KC_EQL,  KC_LCBR, KC_RCBR, TRAILING_SEMICOLON,
+    KC_MINS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______, KC_EQL,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
