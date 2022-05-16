@@ -48,3 +48,9 @@
 //#define MIDI_TONE_KEYCODE_OCTAVES 2
 
 #define TAPPING_TERM 250
+
+#define LEADER_PER_KEY_TIMING
+#define LEADER_TIMEOUT (TAPPING_TERM+50)
+
+#define ONESHOT_TAP_TOGGLE 3  /* Tapping this number of times holds the key until tapped once again. */
+#define ONESHOT_TIMEOUT 5000  /* Time (in ms) before the one shot key is released */
