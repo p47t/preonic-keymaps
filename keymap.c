@@ -39,9 +39,6 @@ static struct t_tap {
     tap_state_t grave;
     tap_state_t lsft;
     tap_state_t rsft;
-    tap_state_t lctl;
-    tap_state_t lalt;
-    tap_state_t lgui;
 } qk_tap_state = {
     .l_brackets = 0,
     .r_brackets = 0,
@@ -50,9 +47,6 @@ static struct t_tap {
     .grave = 0,
     .lsft = 0,
     .rsft = 0,
-    .lctl = 0,
-    .lalt = 0,
-    .lgui = 0,
 };
 
 /* Sentinel value for invalid tap dance exit */
@@ -312,115 +306,6 @@ void td_rsft_reset(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.rsft = 0;
 }
 
-void td_lctl_finished(qk_tap_dance_state_t *state, void *user_data) {
-    qk_tap_state.lctl = get_tapdance_state(state);
-    switch (qk_tap_state.lctl) {
-        case SINGLE_TAP:
-            register_code16(KC_LSFT);
-            register_code16(KC_LPRN);
-            break;
-        case SINGLE_HOLD:
-            register_mods(MOD_BIT(KC_LCTL));
-            break;
-        case DOUBLE_TAP:
-            tap_code16(KC_LCTL);
-            register_code16(KC_LCTL);
-            break;
-        default:
-            break;
-    }
-}
-
-void td_lctl_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (qk_tap_state.lctl) {
-        case SINGLE_TAP:
-            unregister_code16(KC_LPRN);
-            unregister_code16(KC_LSFT);
-            break;
-        case SINGLE_HOLD:
-            unregister_mods(MOD_BIT(KC_LCTL));
-            break;
-        case DOUBLE_TAP:
-            unregister_code16(KC_LCTL);
-            break;
-        default:
-            break;
-    }
-    qk_tap_state.lctl = 0;
-}
-
-void td_lalt_finished(qk_tap_dance_state_t *state, void *user_data) {
-    qk_tap_state.lalt = get_tapdance_state(state);
-    switch (qk_tap_state.lalt) {
-        case SINGLE_TAP:
-            register_code16(KC_LBRC);
-            break;
-        case SINGLE_HOLD:
-            register_mods(MOD_BIT(KC_LALT));
-            break;
-        case DOUBLE_TAP:
-            tap_code16(KC_LALT);
-            register_code16(KC_LALT);
-            break;
-        default:
-            break;
-    }
-}
-
-void td_lalt_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (qk_tap_state.lalt) {
-        case SINGLE_TAP:
-            unregister_code16(KC_LBRC);
-            break;
-        case SINGLE_HOLD:
-            unregister_mods(MOD_BIT(KC_LALT));
-            break;
-        case DOUBLE_TAP:
-            unregister_code16(KC_LALT);
-            break;
-        default:
-            break;
-    }
-    qk_tap_state.lalt = 0;
-}
-
-void td_lgui_finished(qk_tap_dance_state_t *state, void *user_data) {
-    qk_tap_state.lgui = get_tapdance_state(state);
-    switch (qk_tap_state.lgui) {
-        case SINGLE_TAP:
-            register_code16(KC_LSFT);
-            register_code16(KC_LCBR);
-            break;
-        case SINGLE_HOLD:
-            register_mods(MOD_BIT(KC_LGUI));
-            break;
-        case DOUBLE_TAP:
-            tap_code16(KC_LGUI);
-            register_code16(KC_LGUI);
-            break;
-        default:
-            break;
-    }
-}
-
-void td_lgui_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (qk_tap_state.lgui) {
-        case SINGLE_TAP:
-            unregister_code16(KC_LCBR);
-            unregister_code16(KC_LSFT);
-            break;
-        case SINGLE_HOLD:
-            unregister_mods(MOD_BIT(KC_LGUI));
-            break;
-        case DOUBLE_TAP:
-            unregister_code16(KC_LGUI);
-            break;
-        default:
-            break;
-    }
-    qk_tap_state.lgui = 0;
-}
-
 // Tap Dance Declarations
 enum tapdance_keycodes {
     TD_L_BRACKETS,
@@ -431,9 +316,6 @@ enum tapdance_keycodes {
     TD_GRV,
     TD_LEFT_SHIFT,
     TD_RIGHT_SHIFT,
-    TD_LEFT_CTRL,
-    TD_LEFT_ALT,
-    TD_LEFT_GUI,
 };
 
 // Tap Dance Definitions
@@ -458,9 +340,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
     [TD_LEFT_SHIFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lsft_finished, td_lsft_reset),
     [TD_RIGHT_SHIFT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_rsft_finished, td_rsft_reset),
-    [TD_LEFT_CTRL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lctl_finished, td_lctl_reset),
-    [TD_LEFT_ALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lalt_finished, td_lalt_reset),
-    [TD_LEFT_GUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_lgui_finished, td_lgui_reset),
 };
 
 #define TD_LBRK TD(TD_L_BRACKETS)
@@ -471,9 +350,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TD_GRV  TD(TD_GRV)
 #define TD_LSFT TD(TD_LEFT_SHIFT)
 #define TD_RSFT TD(TD_RIGHT_SHIFT)
-#define TD_LCTL TD(TD_LEFT_CTRL)
-#define TD_LALT TD(TD_LEFT_ALT)
-#define TD_LGUI TD(TD_LEFT_GUI)
 
 // Layers
 
@@ -490,6 +366,10 @@ enum preonic_keycodes {
     BACKLIT,
     MICMUTE, // mute microphone
 };
+
+#define MT_LCTL MT(MOD_LCTL, KC_LPRN)
+#define MT_LALT MT(MOD_LALT, KC_LBRC)
+#define MT_LGUI MT(MOD_LGUI, KC_LCBR)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -511,7 +391,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
     TD_GRV,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    TD_SCLN, KC_ENT,
     TD_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  TD_SLSH, TD_RSFT,
-    MICMUTE, TD_LCTL, TD_LALT, TD_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    MICMUTE, MT_LCTL, MT_LALT, MT_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Lower
@@ -581,6 +461,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+    case LGUI_T(KC_LCBR):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_LCBR); // Send KC_LCBR on tap
+            return false;        // Return false to ignore further processing of key
+        }
+        break;
+    case LCTL_T(KC_LPRN):
+        if (record->tap.count && record->event.pressed) {
+            tap_code16(KC_LPRN); // Send KC_DQUO on tap
+            return false;        // Return false to ignore further processing of key
+        }
+        break;
     case LOWER:
         if (record->event.pressed) {
             layer_on(LAYER_LOWER);
