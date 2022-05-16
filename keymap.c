@@ -73,12 +73,15 @@ void td_l_brackets_finished(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.l_brackets = get_tapdance_state(state);
     switch (qk_tap_state.l_brackets) {
         case SINGLE_TAP:
+        case SINGLE_HOLD:
             register_code16(KC_LEFT_PAREN);
             break;
         case DOUBLE_TAP:
+        case DOUBLE_HOLD:
             register_code(KC_LBRACKET);
             break;
         case TRIPLE_TAP:
+        case TRIPLE_HOLD:
             register_code16(KC_LEFT_CURLY_BRACE);
             break;
         default:
@@ -89,12 +92,15 @@ void td_l_brackets_finished(qk_tap_dance_state_t *state, void *user_data) {
 void td_l_brackets_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.l_brackets) {
         case SINGLE_TAP:
+        case SINGLE_HOLD:
             unregister_code16(KC_LEFT_PAREN);
             break;
         case DOUBLE_TAP:
+        case DOUBLE_HOLD:
             unregister_code(KC_LBRACKET);
             break;
         case TRIPLE_TAP:
+        case TRIPLE_HOLD:
             unregister_code16(KC_LEFT_CURLY_BRACE);
             break;
         default:
@@ -107,12 +113,15 @@ void td_r_brackets_finished(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.r_brackets = get_tapdance_state(state);
     switch (qk_tap_state.r_brackets) {
         case SINGLE_TAP:
+        case SINGLE_HOLD:
             register_code16(KC_RIGHT_PAREN);
             break;
         case DOUBLE_TAP:
+        case DOUBLE_HOLD:
             register_code(KC_RBRACKET);
             break;
         case TRIPLE_TAP:
+        case TRIPLE_HOLD:
             register_code16(KC_RIGHT_CURLY_BRACE);
             break;
         default:
@@ -123,12 +132,15 @@ void td_r_brackets_finished(qk_tap_dance_state_t *state, void *user_data) {
 void td_r_brackets_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.r_brackets) {
         case SINGLE_TAP:
+        case SINGLE_HOLD:
             unregister_code16(KC_RIGHT_PAREN);
             break;
         case DOUBLE_TAP:
+        case DOUBLE_HOLD:
             unregister_code(KC_RBRACKET);
             break;
         case TRIPLE_TAP:
+        case TRIPLE_HOLD:
             unregister_code16(KC_RIGHT_CURLY_BRACE);
             break;
         default:
@@ -141,12 +153,15 @@ void td_quotes_finished(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.quotes = get_tapdance_state(state);
     switch (qk_tap_state.quotes) {
         case SINGLE_TAP:
+        case SINGLE_HOLD:
             register_code16(KC_QUOTE);
             break;
         case DOUBLE_TAP:
+        case DOUBLE_HOLD:
             register_code16(KC_DOUBLE_QUOTE);
             break;
         case TRIPLE_TAP:
+        case TRIPLE_HOLD:
             register_code16(KC_PIPE);
         default:
             break;
@@ -156,12 +171,15 @@ void td_quotes_finished(qk_tap_dance_state_t *state, void *user_data) {
 void td_quotes_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.quotes) {
         case SINGLE_TAP:
+        case SINGLE_HOLD:
             unregister_code16(KC_QUOTE);
             break;
         case DOUBLE_TAP:
+        case DOUBLE_HOLD:
             unregister_code16(KC_DOUBLE_QUOTE);
             break;
         case TRIPLE_TAP:
+        case TRIPLE_HOLD:
             unregister_code16(KC_PIPE);
             break;
         default:
@@ -174,12 +192,15 @@ void td_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.grave = get_tapdance_state(state);
     switch (qk_tap_state.grave) {
         case SINGLE_TAP:
+        case SINGLE_HOLD:
             register_code16(KC_GRV);
             break;
         case DOUBLE_TAP:
+        case DOUBLE_HOLD:
             register_code16(KC_TILDE);
             break;
         case TRIPLE_TAP:
+        case TRIPLE_HOLD:
             SEND_STRING("```");
             break;
         default:
@@ -190,12 +211,15 @@ void td_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
 void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.grave) {
         case SINGLE_TAP:
+        case SINGLE_HOLD:
             unregister_code16(KC_GRV);
             break;
         case DOUBLE_TAP:
+        case DOUBLE_HOLD:
             unregister_code16(KC_TILDE);
             break;
         case TRIPLE_TAP:
+        case TRIPLE_HOLD:
             break;
         default:
             break;
