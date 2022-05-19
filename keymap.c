@@ -14,6 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "audio.h"
 #include "keycode.h"
 #include QMK_KEYBOARD_H
 #include "muse.h"
@@ -208,6 +209,12 @@ enum preonic_keycodes {
 #define MT_LALT MT(MOD_LALT, KC_LBRC)
 #define MT_LGUI MT(MOD_LGUI, KC_LCBR)
 
+#define OS_LSFT OSM(MOD_LSFT)
+#define OS_RSFT OSM(MOD_RSFT)
+#define OS_LCTL OSM(MOD_LCTL)
+#define OS_LALT OSM(MOD_LALT)
+#define OS_LGUI OSM(MOD_LGUI)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -227,8 +234,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    TD_5,    KC_6,    TD_7,    TD_8,    TD_9,    KC_0,    KC_BSPC,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
     TD_GRV,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
-    OSM(MOD_LSFT), KC_Z, KC_X, KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OSM(MOD_RSFT),
-    MICMUTE, MT_LCTL, MT_LALT, MT_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    OS_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
+    MICMUTE, OS_LCTL, OS_LALT, OS_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Lower
@@ -356,6 +363,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case MICMUTE:
         if (record->event.pressed) {
            SEND_STRING(SS_LGUI("y")); // Cmd-Y for chime
+           float my_song[][2] = SONG(QWERTY_SOUND);
+           PLAY_SONG(my_song);
            return false;
         }
         break;
