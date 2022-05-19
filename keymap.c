@@ -148,6 +148,10 @@ enum tapdance_keycodes {
     TD_QUOTES,
     TD_SLASHES,
     TD_GRAVE,
+    TD_5_F5,
+    TD_7_F7,
+    TD_8_F8,
+    TD_9_F9,
 };
 
 // Tap Dance Definitions
@@ -160,11 +164,20 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
     // once: `, twice: ~, thrice: `|`
     [TD_GRAVE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_grave_finished, td_grave_reset),
+
+    [TD_5_F5] = ACTION_TAP_DANCE_DOUBLE(KC_5, KC_F5),
+    [TD_7_F7] = ACTION_TAP_DANCE_DOUBLE(KC_7, KC_F7),
+    [TD_8_F8] = ACTION_TAP_DANCE_DOUBLE(KC_8, KC_F8),
+    [TD_9_F9] = ACTION_TAP_DANCE_DOUBLE(KC_9, KC_F9),
 };
 
 #define TD_QUOT TD(TD_QUOTES)
 #define TD_SLSH TD(TD_SLASHES)
 #define TD_GRV  TD(TD_GRAVE)
+#define TD_5    TD(TD_5_F5)
+#define TD_7    TD(TD_7_F7)
+#define TD_8    TD(TD_8_F8)
+#define TD_9    TD(TD_9_F9)
 
 // Layers
 
@@ -205,7 +218,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_QWERTY] = LAYOUT_preonic_grid(
-    KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+    KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    TD_5,    KC_6,    TD_7,    TD_8,    TD_9,    KC_0,    KC_BSPC,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
     TD_GRV,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
     OSM(MOD_LSFT), KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  TD_SLSH, KC_LEAD,
