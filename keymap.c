@@ -17,6 +17,7 @@
 #include "keycode.h"
 #include QMK_KEYBOARD_H
 #include "muse.h"
+#include "macros.h"
 
 // Tap dance
 
@@ -349,11 +350,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TRAILING_SEMICOLON:
         if (record->event.pressed) {
             SEND_STRING(SS_TAP(X_END)";"SS_TAP(X_ENTER));
+           return false;
         }
         break;
     case MICMUTE:
         if (record->event.pressed) {
            SEND_STRING(SS_LGUI("y")); // Cmd-Y for chime
+           return false;
+        }
+        break;
+    case MACKEY1:
+        if (record->event.pressed) {
+           SEND_STRING(MACRO_STRING1);
+           return false;
+        }
+        break;
+    case MACKEY2:
+        if (record->event.pressed) {
+           SEND_STRING(MACRO_STRING2);
+           return false;
+        }
+        break;
+    case MACKEY3:
+        if (record->event.pressed) {
+           SEND_STRING(MACRO_STRING3);
+           return false;
+        }
+        break;
+    case MACKEY4:
+        if (record->event.pressed) {
+           SEND_STRING(MACRO_STRING4);
+           return false;
+        }
+        break;
+    case MACKEY5:
+        if (record->event.pressed) {
+           SEND_STRING(MACRO_STRING5);
+           return false;
         }
         break;
     }
