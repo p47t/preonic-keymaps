@@ -240,23 +240,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------------------.
- * |   Del |   !   |   @   |   #   |   $   |   %   |   ^   |   &   |   *   |   (   |   )   |  Del  |
+ * |  Del  |   !   |   @   |   #   |   $   |   %   |   ^   |   &   |   *   |   +   |   =   |  Del  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |   ~   |   B1  |   MU  |  B2   |       |       |       |   _   |   +   |   [   |   ]   |   |   |
+ * |   ~   |   B1  |   MU  |  B2   |       |       |       |       |       |   [   |   ]   |   |   |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |   ~   |   ML  |   MD  |  MR   |       |       |       |   -   |   =   |   {   |   }   | End+; |
+ * |   ~   |   ML  |   MD  |  MR   |       |       |       |       |       |   {   |   }   | End+; |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |   -   |   WL  |   WD  |   WU  |  WR   |       |       |       |       |       |       |   =   |
+ * |       |   WL  |   WD  |   WU  |  WR   |       |       |       |       |       |       |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |               |       | Home  | Pg Dn | Pg Up |  End |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
-    KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
-    KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_PIPE,
-    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_MINS, KC_EQL,  KC_LCBR, KC_RCBR, TRAILING_SEMICOLON,
-    KC_MINS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______, KC_EQL,
-    _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+    KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_PLUS, KC_EQL,  KC_DEL,
+    KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_PIPE,
+    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, _______, _______, KC_LCBR, KC_RCBR, TRAILING_SEMICOLON,
+    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______, _______,
+    _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
 /* Raise
@@ -267,7 +267,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   `   |       |       |       |       |       | Left  | Down  |  Up   | Right |       |       |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |   _   | Macro | Macro | Macro | Macro | Macro |       |       |       |       |       |   +   |
+ * |       | Macro | Macro | Macro | Macro | Macro |       |       |       |       |       |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |               |       | Next  | Vol-  | Vol+  |  Play |
  * `-----------------------------------------------------------------------------------------------'
@@ -276,8 +276,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
     KC_GRV,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_BSLS,
     KC_GRV,  _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-    KC_UNDS, MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_PLUS,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+    _______, MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,
+    _______, _______, _______, _______, _______, KC_UNDS, KC_UNDS, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
 /* Adjust (Lower + Raise)
