@@ -356,15 +356,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     case TRAILING_SEMICOLON:
         if (record->event.pressed) {
-            SEND_STRING(SS_TAP(X_END)";"SS_TAP(X_ENTER));
+            SEND_STRING("i"SS_TAP(X_END)";"SS_TAP(X_ENTER));
            return false;
         }
         break;
     case MICMUTE:
         if (record->event.pressed) {
            SEND_STRING(SS_LGUI("y")); // Cmd-Y for chime
-           float my_song[][2] = SONG(QWERTY_SOUND);
-           PLAY_SONG(my_song);
+           static float micmute_song[][2] = SONG(TERMINAL_SOUND);
+           PLAY_SONG(micmute_song);
            return false;
         }
         break;
