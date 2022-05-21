@@ -190,6 +190,7 @@ enum preonic_keycodes {
     RAISE,
     BACKLIT,
     TRAILING_SEMICOLON,
+    TRAILING_COMMA,
     MICMUTE, // mute microphone
     MACKEY1,
     MACKEY2,
@@ -209,6 +210,9 @@ enum preonic_keycodes {
 #define OS_LCTL OSM(MOD_LCTL)
 #define OS_LALT OSM(MOD_LALT)
 #define OS_LGUI OSM(MOD_LGUI)
+
+#define TR_SCLN TRAILING_SEMICOLON
+#define TR_COMM TRAILING_COMMA
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -351,8 +355,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     case TRAILING_SEMICOLON:
         if (record->event.pressed) {
-            SEND_STRING("i"SS_TAP(X_END)";"SS_TAP(X_ENTER));
-           return false;
+            SEND_STRING(SS_TAP(X_END)";");
+            return false;
+        }
+        break;
+    case TRAILING_COMMA:
+        if (record->event.pressed) {
+            SEND_STRING(SS_TAP(X_END)",");
+            return false;
         }
         break;
     case MICMUTE:
