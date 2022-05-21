@@ -36,9 +36,11 @@ typedef enum {
 static struct t_tap {
     tap_state_t quotes;
     tap_state_t grave;
+    tap_state_t mute;
 } qk_tap_state = {
     .quotes = 0,
     .grave = 0,
+    .mute = 0,
 };
 
 /* Sentinel value for invalid tap dance exit */
@@ -145,10 +147,38 @@ void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.grave = 0;
 }
 
+void td_mute_finished(qk_tap_dance_state_t *state, void *user_data) {
+    qk_tap_state.mute = get_tapdance_state(state);
+    switch (qk_tap_state.mute) {
+        case SINGLE_TAP: {
+            SEND_STRING(SS_LGUI("y")); // Cmd-Y for chime
+            break;
+        }
+        case SINGLE_HOLD:
+            register_mods(MOD_BIT(KC_LCTL));
+            break;
+        default:
+            break;
+    }
+}
+
+void td_mute_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (qk_tap_state.mute) {
+        case SINGLE_TAP:
+        case SINGLE_HOLD:
+            unregister_mods(MOD_BIT(KC_LCTL));
+            break;
+        default:
+            break;
+    }
+    qk_tap_state.mute = 0;
+}
+
 // Tap Dance Declarations
 enum tapdance_keycodes {
     TD_QUOTES,
     TD_GRAVE,
+    TD_MICMUTE,
     TD_5_F5,
     TD_7_F7,
     TD_8_F8,
@@ -163,6 +193,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // once: `, twice: ~, thrice: `|`
     [TD_GRAVE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_grave_finished, td_grave_reset),
 
+    // once: mute, hold: Ctrl
+    [TD_MICMUTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_mute_finished, td_mute_reset),
+
     [TD_5_F5] = ACTION_TAP_DANCE_DOUBLE(KC_5, KC_F5),
     [TD_7_F7] = ACTION_TAP_DANCE_DOUBLE(KC_7, KC_F7),
     [TD_8_F8] = ACTION_TAP_DANCE_DOUBLE(KC_8, KC_F8),
@@ -175,6 +208,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TD_7    TD(TD_7_F7)
 #define TD_8    TD(TD_8_F8)
 #define TD_9    TD(TD_9_F9)
+#define TD_MUTE TD(TD_MICMUTE)
 
 // Layers
 
@@ -191,7 +225,6 @@ enum preonic_keycodes {
     BACKLIT,
     TRAILING_SEMICOLON,
     TRAILING_COMMA,
-    MICMUTE, // mute microphone
     MACKEY1,
     MACKEY2,
     MACKEY3,
@@ -226,7 +259,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
  * | Shift |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   | Shift |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |MicMute| Ctrl (| Alt [ | GUI { |Lower  |     Space     | Raise | Left  | Down  |  Up   | Right |
+ * | Mute  | Ctrl (| Alt [ | GUI { |Lower  |     Space     | Raise | Left  | Down  |  Up   | Right |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_QWERTY] = LAYOUT_preonic_grid(
@@ -234,7 +267,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
     TD_GRV,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
     OS_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
-    MICMUTE, OS_LCTL, OS_LALT, OS_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    TD_MUTE, OS_LCTL, OS_LALT, OS_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Lower
@@ -351,14 +384,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             SEND_STRING(SS_TAP(X_END)",");
             return false;
-        }
-        break;
-    case MICMUTE:
-        if (record->event.pressed) {
-           SEND_STRING(SS_LGUI("y")); // Cmd-Y for chime
-           static float micmute_song[][2] = SONG(TERMINAL_SOUND);
-           PLAY_SONG(micmute_song);
-           return false;
         }
         break;
     case MACKEY1:
