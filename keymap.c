@@ -30,6 +30,8 @@ typedef enum {
     DOUBLE_HOLD,
     TRIPLE_TAP,
     TRIPLE_HOLD,
+    SUCCESSIVE_TAP,
+    SUCCESSIVE_HOLD,
 } tap_state_t;
 
 // Global TapDance State
@@ -65,8 +67,13 @@ tap_state_t get_tapdance_state(qk_tap_dance_state_t *state) {
         } else {
             return TRIPLE_HOLD;
         }
-    } else
-        return TAP_DANCE_NO_MATCH;
+    } else {
+        if (state->interrupted || !state->pressed) {
+            return SUCCESSIVE_TAP;
+        } else {
+            return SUCCESSIVE_HOLD;
+        }
+    }
 }
 
 void td_quotes_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -74,6 +81,8 @@ void td_quotes_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.quotes) {
         case SINGLE_TAP:
         case SINGLE_HOLD:
+        case SUCCESSIVE_TAP:
+        case SUCCESSIVE_HOLD:
             register_code16(KC_QUOTE);
             break;
         case DOUBLE_TAP:
@@ -92,6 +101,8 @@ void td_quotes_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.quotes) {
         case SINGLE_TAP:
         case SINGLE_HOLD:
+        case SUCCESSIVE_TAP:
+        case SUCCESSIVE_HOLD:
             unregister_code16(KC_QUOTE);
             break;
         case DOUBLE_TAP:
@@ -113,6 +124,8 @@ void td_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.grave) {
         case SINGLE_TAP:
         case SINGLE_HOLD:
+        case SUCCESSIVE_TAP:
+        case SUCCESSIVE_HOLD:
             register_code16(KC_GRV);
             break;
         case DOUBLE_TAP:
@@ -132,6 +145,8 @@ void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.grave) {
         case SINGLE_TAP:
         case SINGLE_HOLD:
+        case SUCCESSIVE_TAP:
+        case SUCCESSIVE_HOLD:
             unregister_code16(KC_GRV);
             break;
         case DOUBLE_TAP:
@@ -165,6 +180,7 @@ void td_mute_finished(qk_tap_dance_state_t *state, void *user_data) {
 void td_mute_reset(qk_tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.mute) {
         case SINGLE_TAP:
+            break;
         case SINGLE_HOLD:
             unregister_mods(MOD_BIT(KC_LCTL));
             break;
