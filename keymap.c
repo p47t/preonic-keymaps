@@ -148,7 +148,6 @@ void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Tap Dance Declarations
 enum tapdance_keycodes {
     TD_QUOTES,
-    TD_SLASHES,
     TD_GRAVE,
     TD_5_F5,
     TD_7_F7,
@@ -161,9 +160,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // once: single quote, twice: double quote, thrice: backtick
     [TD_QUOTES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_quotes_finished, td_quotes_reset),
 
-    // once: slash, twice: back slash
-    [TD_SLASHES] = ACTION_TAP_DANCE_DOUBLE(KC_SLASH, KC_BACKSLASH),
-
     // once: `, twice: ~, thrice: `|`
     [TD_GRAVE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_grave_finished, td_grave_reset),
 
@@ -174,7 +170,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 #define TD_QUOT TD(TD_QUOTES)
-#define TD_SLSH TD(TD_SLASHES)
 #define TD_GRV  TD(TD_GRAVE)
 #define TD_5    TD(TD_5_F5)
 #define TD_7    TD(TD_7_F7)
