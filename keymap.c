@@ -247,6 +247,7 @@ enum preonic_keycodes {
 #define TR_SCLN TRAILING_SEMICOLON
 #define TR_COMM TRAILING_COMMA
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -272,7 +273,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------------------.
- * |  Del  |   !   |   @   |   #   |   $   |   %   |   ^   |   &   |   *   |   +   |   =   |  Del  |
+ * |  Del  |       |       |       |       |       |       |   (   |   )   |   +   |   =   |  Del  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   ~   |   B1  |   MU  |  B2   |       |       |       |   [   |   ]   |       |       |   |   |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
@@ -284,10 +285,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
-    KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_PLUS, KC_EQL,  KC_DEL,
+    KC_DEL,  _______, _______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, KC_PLUS, KC_EQL,  KC_DEL,
     KC_TILD, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, KC_LBRC, KC_RBRC, _______, _______, KC_PIPE,
     KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_LCBR, KC_RCBR, _______, _______, TR_SCLN,
-    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, TR_COMM, KC_BSLS, _______, _______,
+    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, TR_COMM, _______, KC_BSLS, _______,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
@@ -334,6 +335,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 )
 
 }; // keymaps
+// clang-format on
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
