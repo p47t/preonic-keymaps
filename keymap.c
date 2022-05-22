@@ -308,6 +308,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
+#define CMD_Z LGUI(KC_Z)
+#define CMD_X LGUI(KC_X)
+#define CMD_C LGUI(KC_C)
+#define CMD_V LGUI(KC_V)
+
 /* Raise
  * ,-----------------------------------------------------------------------------------------------.
  * |  Del  |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   | F10   |  Del  |
@@ -316,17 +321,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   `   |       |       |       |       |       | Left  | Down  |  Up   | Right |       |       |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |       |       | Home  | Pg Dn | Pg Up |   |   |       |
+ * |       | Cmd-Z | Cmd-X | Cmd-C | Cmd-V |       |       | Home  | Pg Dn | Pg Up |   |   |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |               |       | Next  | Vol-  | Vol+  |  Play |
+ * |       |       |       |       |       |               |       | Mute  | Vol-  | Vol+  |  Play |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_RAISE] = LAYOUT_preonic_grid(
     KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
     KC_ESC,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_BSPC,
     KC_GRV,  _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_PIPE, _______,
-    _______, _______, _______, _______, _______, KC_UNDS, KC_UNDS, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
+    _______, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_PIPE, _______,
+    _______, _______, _______, _______, _______, KC_UNDS, KC_UNDS, _______, KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
 /* Adjust (Lower + Raise)
