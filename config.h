@@ -24,6 +24,9 @@
         { SONG(QWERTY_SOUND), SONG(COLEMAK_SOUND), SONG(DVORAK_SOUND) }
 #endif
 
+// Enables delay during startup song to accomidate for USB startup issues.
+#define AUDIO_INIT_DELAY
+
 #define MUSIC_MASK (keycode != KC_NO)
 
 /*
