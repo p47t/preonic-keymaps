@@ -38,11 +38,11 @@ typedef enum {
 static struct t_tap {
     tap_state_t quotes;
     tap_state_t grave;
-    tap_state_t mute;
+    tap_state_t magic;
 } qk_tap_state = {
     .quotes = 0,
     .grave = 0,
-    .mute = 0,
+    .magic = 0,
 };
 
 /* Sentinel value for invalid tap dance exit */
@@ -162,14 +162,25 @@ void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.grave = 0;
 }
 
-void td_mute_finished(qk_tap_dance_state_t *state, void *user_data) {
-    qk_tap_state.mute = get_tapdance_state(state);
-    switch (qk_tap_state.mute) {
+void td_magic_finished(qk_tap_dance_state_t *state, void *user_data) {
+    qk_tap_state.magic = get_tapdance_state(state);
+    switch (qk_tap_state.magic) {
         case SINGLE_TAP: {
-            SEND_STRING(SS_LGUI("y")); // Cmd-Y for chime
+            SEND_STRING(SS_LSFT(SS_LCTL(SS_LALT(SS_LGUI("x"))))); // Hyper-X
+            break;
+        }
+        case DOUBLE_TAP: {
+            SEND_STRING(SS_LSFT(SS_LCTL(SS_LALT(SS_LGUI("y"))))); // Hyper-Y
+            break;
+        }
+        case TRIPLE_TAP: {
+            SEND_STRING(SS_LSFT(SS_LCTL(SS_LALT(SS_LGUI("z"))))); // Hyper-Z
             break;
         }
         case SINGLE_HOLD:
+        case DOUBLE_HOLD:
+        case TRIPLE_HOLD:
+        case SUCCESSIVE_HOLD:
             register_mods(MOD_BIT(KC_LCTL));
             break;
         default:
@@ -177,24 +188,30 @@ void td_mute_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void td_mute_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (qk_tap_state.mute) {
+void td_magic_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (qk_tap_state.magic) {
         case SINGLE_TAP:
+        case DOUBLE_TAP:
+        case TRIPLE_TAP:
+        case SUCCESSIVE_TAP:
             break;
         case SINGLE_HOLD:
+        case DOUBLE_HOLD:
+        case TRIPLE_HOLD:
+        case SUCCESSIVE_HOLD:
             unregister_mods(MOD_BIT(KC_LCTL));
             break;
         default:
             break;
     }
-    qk_tap_state.mute = 0;
+    qk_tap_state.magic = 0;
 }
 
 // Tap Dance Declarations
 enum tapdance_keycodes {
     TD_QUOTES,
     TD_GRAVE,
-    TD_MICMUTE,
+    TD_APP_MAGIC,
     TD_5_F5,
     TD_7_F7,
     TD_8_F8,
@@ -210,7 +227,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_GRAVE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_grave_finished, td_grave_reset),
 
     // once: mute, hold: Ctrl
-    [TD_MICMUTE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_mute_finished, td_mute_reset),
+    [TD_APP_MAGIC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_magic_finished, td_magic_reset),
 
     [TD_5_F5] = ACTION_TAP_DANCE_DOUBLE(KC_5, KC_F5),
     [TD_7_F7] = ACTION_TAP_DANCE_DOUBLE(KC_7, KC_F7),
@@ -224,7 +241,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #define TD_7    TD(TD_7_F7)
 #define TD_8    TD(TD_8_F8)
 #define TD_9    TD(TD_9_F9)
-#define TD_MUTE TD(TD_MICMUTE)
+#define TD_MAGIC TD(TD_APP_MAGIC)
 
 // Layers
 
@@ -284,16 +301,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
     TD_GRV,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
     OS_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
-    TD_MUTE, OS_LCTL, OS_LALT, OS_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    TD_MAGIC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Lower
  * ,-----------------------------------------------------------------------------------------------.
- * |  Del  | Macro | Macro | Macro | Macro | Macro |       |   (   |   )   |   +   |   =   |  Del  |
+ * |       | Macro | Macro | Macro | Macro | Macro |       |       |       |       |       |  Del  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |  Esc  |   B1  |   MU  |  B2   |       |       |       |   [   |   ]   |       |       | Bksc  |
+ * |  Esc  |   B1  |   MU  |  B2   |       |       |       |   (   |   )   |   +   |   =   | Bksc  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |   ~   |   ML  |   MD  |  MR   |       |       |       |   {   |   }   |       |       | End+; |
+ * |   ~   |   ML  |   MD  |  MR   |       |       |       |   {   |   }   |   [   |   ]   | End+; |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
  * |       |   WL  |   WD  |   WU  |  WR   |       |       |       | End+, |       |   \   |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
@@ -301,9 +318,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
-    KC_DEL,  MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, KC_LPRN, KC_RPRN, KC_PLUS, KC_EQL,  KC_DEL,
-    KC_ESC,  KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, KC_LBRC, KC_RBRC, _______, _______, KC_BSPC,
-    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_LCBR, KC_RCBR, _______, _______, TR_SCLN,
+    _______,  MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, _______, _______, _______, _______,  KC_DEL,
+    KC_ESC,  KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, KC_LPRN, KC_RPRN, KC_PLUS, KC_EQL,  KC_BSPC,
+    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, TR_SCLN,
     _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, TR_COMM, _______, KC_BSLS, _______,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
@@ -315,7 +332,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Raise
  * ,-----------------------------------------------------------------------------------------------.
- * |  Del  |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   | F10   |  Del  |
+ * |       |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   | F10   |  Del  |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |  Esc  |  F11  |  F12  |  F13  |  F14  |  F15  |  F16  |  F17  |  F18  |  F19  | F20   | Bksc  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
@@ -327,7 +344,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_RAISE] = LAYOUT_preonic_grid(
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
+    _______,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
     KC_ESC,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_BSPC,
     KC_GRV,  _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
     _______, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_PIPE, _______,
