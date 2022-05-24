@@ -297,10 +297,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_QWERTY] = LAYOUT_preonic_grid(
-    KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    TD_5,    KC_6,    TD_7,    TD_8,    TD_9,    KC_0,    KC_BSPC,
-    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
-    TD_GRV,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
-    OS_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
+    KC_ESC,   KC_1,    KC_2,    KC_3,    KC_4,    TD_5,    KC_6,    TD_7,    TD_8,    TD_9,    KC_0,    KC_BSPC,
+    KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD_QUOT,
+    TD_GRV,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
+    OS_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
     TD_MAGIC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
@@ -312,7 +312,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   ~   |   ML  |   MD  |  MR   |       |       |       |   {   |   }   |   [   |   ]   | End+; |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |       |   WL  |   WD  |   WU  |  WR   |       |       |       | End+, |       |   \   |       |
+ * |       |   WL  |   WD  |   WU  |  WR   |       |       |       | End+, |   >   |   \   |       |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |               |       | Home  | Pg Dn | Pg Up |  End |
  * `-----------------------------------------------------------------------------------------------'
@@ -321,7 +321,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, _______, _______, _______, _______,  KC_DEL,
     KC_ESC,  KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, KC_LPRN, KC_RPRN, KC_PLUS, KC_EQL,  KC_BSPC,
     KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, TR_SCLN,
-    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, TR_COMM, _______, KC_BSLS, _______,
+    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, TR_COMM, KC_RABK, KC_BSLS, _______,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
@@ -344,7 +344,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_RAISE] = LAYOUT_preonic_grid(
-    _______,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
     KC_ESC,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_BSPC,
     KC_GRV,  _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
     _______, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_PIPE, _______,
@@ -365,11 +365,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_ADJUST] = LAYOUT_preonic_grid(
-    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
-    _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, _______, _______,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______, _______, _______, _______,
-    _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
-    BACKLIT, _______, _______, _______, _______, _______, _______, _______, _______, DT_DOWN,   DT_UP, DT_PRNT
+    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11,  KC_F12,
+    _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON, TERM_OFF, _______, _______, _______,
+    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, _______, _______,
+    _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______,  _______, _______, _______,
+    BACKLIT, _______, _______, _______, _______, _______, _______, _______, _______,  DT_DOWN, DT_UP,   DT_PRNT
 )
 
 }; // keymaps
