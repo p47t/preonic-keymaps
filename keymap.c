@@ -308,20 +308,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------------------.
  * |       | Macro | Macro | Macro | Macro | Macro |       |       |       |       |       |  Del  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |  Esc  |   B1  |   MU  |  B2   |       |       |       |   (   |   )   |   +   |   =   | Bksc  |
+ * |  Esc  |   B1  |   MU  |  B2   |       |       |       |   (   |   )   |       |   +   | Bksc  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |   ~   |   ML  |   MD  |  MR   |       |       |       |   {   |   }   |   [   |   ]   | End+; |
+ * |   ~   |   ML  |   MD  |  MR   |       |       |       |   {   |   }   |   =   |       | End+; |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |       |   WL  |   WD  |   WU  |  WR   |       |       |       | End+, |   >   |   \   |       |
+ * |       |   WL  |   WD  |   WU  |  WR   |       |       |   [   |   ]   |   >   |   \   | End+, |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
  * |       |       |       |       |       |               |       | Home  | Pg Dn | Pg Up |  End |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
-    _______,  MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, _______, _______, _______, _______,  KC_DEL,
-    KC_ESC,  KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, KC_LPRN, KC_RPRN, KC_PLUS, KC_EQL,  KC_BSPC,
-    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_LCBR, KC_RCBR, KC_LBRC, KC_RBRC, TR_SCLN,
-    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, TR_COMM, KC_RABK, KC_BSLS, _______,
+    _______, MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, _______, _______, _______, _______, KC_DEL,
+    KC_ESC,  KC_BTN1, KC_MS_U, KC_BTN2, _______, _______, _______, KC_LPRN, KC_RPRN, _______, KC_PLUS, KC_BSPC,
+    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_LCBR, KC_RCBR, KC_EQL,  _______, TR_SCLN,
+    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, KC_LBRC, KC_RBRC, KC_RABK, KC_BSLS, TR_COMM,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
