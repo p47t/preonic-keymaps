@@ -280,6 +280,12 @@ enum preonic_keycodes {
 #define TR_SCLN TRAILING_SEMICOLON
 #define TR_COMM TRAILING_COMMA
 
+#define CMD_Z LGUI(KC_Z)
+#define CMD_X LGUI(KC_X)
+#define CMD_C LGUI(KC_C)
+#define CMD_V LGUI(KC_V)
+#define HY_TAB HYPR(KC_TAB)
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -308,27 +314,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------------------.
  * |       | Macro | Macro | Macro | Macro | Macro |       |       |       |       |       |  Del  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |  Esc  |   B1  |   MU  |  B2   |       |   (   |   )   |   _   |       |       |   +   | Bksc  |
+ * |Hy-Tab |   B1  |   MU  |  B2   |  WD   |   (   |   )   |   _   |   +   |       |       |   "   |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |   ~   |   ML  |   MD  |  MR   |       |   {   |   }   |   -   |       |       |       | End+; |
+ * |   ~   |   ML  |   MD  |  MR   |  WU   |   {   |   }   |   -   |       |       |       | End+; |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |       |   WL  |   WD  |   WU  |  WR   |   [   |   ]   |   =   |       |   >   |   \   | End+, |
+ * |       | Cmd-Z | Cmd-X | Cmd-C | Cmd-V |   [   |   ]   |   =   |   <   |   >   |   \   | End+, |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |               |       | Home  | Pg Dn | Pg Up |  End |
+ * |       |       |       |       |       |       -       |       | Home  | Pg Dn | Pg Up |  End  |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
     _______, MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, _______, _______, _______, _______, KC_DEL,
-    KC_ESC,  KC_BTN1, KC_MS_U, KC_BTN2, _______, KC_LPRN, KC_RPRN, KC_UNDS, _______, _______, KC_PLUS, KC_DQUO,
-    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, _______, KC_LCBR, KC_RCBR, KC_MINS, _______, _______, _______, TR_SCLN,
-    _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, KC_LBRC, KC_RBRC, KC_EQL,  _______, KC_RABK, KC_BSLS, TR_COMM,
+    HY_TAB,  KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_D, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, _______, _______, KC_DQUO,
+    KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_LCBR, KC_RCBR, KC_MINS, _______, _______, _______, TR_SCLN,
+    _______, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   KC_LBRC, KC_RBRC, KC_EQL,  KC_LABK, KC_RABK, KC_BSLS, TR_COMM,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
-
-#define CMD_Z LGUI(KC_Z)
-#define CMD_X LGUI(KC_X)
-#define CMD_C LGUI(KC_C)
-#define CMD_V LGUI(KC_V)
 
 /* Raise
  * ,-----------------------------------------------------------------------------------------------.
@@ -338,9 +339,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   `   |       |       |       |       |       | Left  | Down  |  Up   | Right |       | Pg Up |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
- * |       | Cmd-Z | Cmd-X | Cmd-C | Cmd-V |       |       |       | Home  |  End  |   |   | Pg Dn |
+ * |       |       |       |       |       |       |       |       | Home  |  End  |   |   | Pg Dn |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * |       |       |       |       |       |               |       | Mute  | Vol-  | Vol+  | Play  |
+ * |       |       |       |       |       |       _       |       | Mute  | Vol-  | Vol+  | Play  |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_RAISE] = LAYOUT_preonic_grid(
