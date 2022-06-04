@@ -16,6 +16,7 @@
 
 #include "audio.h"
 #include "keycode.h"
+#include "quantum_keycodes.h"
 #include QMK_KEYBOARD_H
 #include "muse.h"
 #include "macros.h"
@@ -181,7 +182,7 @@ void td_magic_finished(qk_tap_dance_state_t *state, void *user_data) {
         case DOUBLE_HOLD:
         case TRIPLE_HOLD:
         case SUCCESSIVE_HOLD:
-            register_mods(MOD_BIT(KC_MEH));
+            register_mods(MOD_LGUI|MOD_LALT|MOD_LCTL);
             break;
         default:
             break;
@@ -199,7 +200,7 @@ void td_magic_reset(qk_tap_dance_state_t *state, void *user_data) {
         case DOUBLE_HOLD:
         case TRIPLE_HOLD:
         case SUCCESSIVE_HOLD:
-            unregister_mods(MOD_BIT(KC_MEH));
+            unregister_mods(MOD_LGUI|MOD_LALT|MOD_LCTL);
             break;
         default:
             break;
