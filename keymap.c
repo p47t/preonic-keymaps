@@ -181,7 +181,7 @@ void td_magic_finished(qk_tap_dance_state_t *state, void *user_data) {
         case DOUBLE_HOLD:
         case TRIPLE_HOLD:
         case SUCCESSIVE_HOLD:
-            register_mods(MOD_BIT(KC_LCTL));
+            register_mods(MOD_BIT(KC_MEH));
             break;
         default:
             break;
@@ -199,7 +199,7 @@ void td_magic_reset(qk_tap_dance_state_t *state, void *user_data) {
         case DOUBLE_HOLD:
         case TRIPLE_HOLD:
         case SUCCESSIVE_HOLD:
-            unregister_mods(MOD_BIT(KC_LCTL));
+            unregister_mods(MOD_BIT(KC_MEH));
             break;
         default:
             break;
