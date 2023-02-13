@@ -17,7 +17,16 @@
 #include QMK_KEYBOARD_H
 #include "audio.h"
 #include "muse.h"
+
+#if __has_include("macros.h")
 #include "macros.h"
+#else
+#define MACRO_STRING1 ""
+#define MACRO_STRING2 ""
+#define MACRO_STRING3 ""
+#define MACRO_STRING4 ""
+#define MACRO_STRING5 ""
+#endif
 
 // Tap dance
 
@@ -440,32 +449,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
     case MACKEY1:
         if (record->event.pressed) {
-           SEND_STRING(MACRO_STRING1);
-           return false;
+            send_string_with_delay_P(MACRO_STRING1, 10);
+            return false;
         }
         break;
     case MACKEY2:
         if (record->event.pressed) {
-           SEND_STRING(MACRO_STRING2);
-           return false;
+            send_string_with_delay_P(MACRO_STRING2, 10);
+            return false;
         }
         break;
     case MACKEY3:
         if (record->event.pressed) {
-           SEND_STRING(MACRO_STRING3);
-           return false;
+            send_string_with_delay_P(MACRO_STRING3, 10);
+            return false;
         }
         break;
     case MACKEY4:
         if (record->event.pressed) {
-           SEND_STRING(MACRO_STRING4);
-           return false;
+            send_string_with_delay_P(MACRO_STRING4, 10);
+            return false;
         }
         break;
     case MACKEY5:
         if (record->event.pressed) {
-           SEND_STRING(MACRO_STRING5);
-           return false;
+            send_string_with_delay_P(MACRO_STRING5, 10);
+            return false;
         }
         break;
     }
