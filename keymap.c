@@ -334,7 +334,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------------------.
  * |       | Macro | Macro | Macro | Macro | Macro |       |       |       |   (   |   )   |  Del  |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
- * |Hy-Tab |   B1  |   MU  |  B2   |  WD   |   (   |   )   |   _   |   +   |   {   |   }   |   "   |
+ * |Hy-Tab |   B1  |   MU  |  B2   |  WD   |   (   |   )   |   _   |   |   |   {   |   }   |   "   |
  * |-------+-------+-------+-------+-------+---------------+-------+-------+-------+-------+-------|
  * |   ~   |   ML  |   MD  |  MR   |  WU   |   {   |   }   |   -   |       |   [   |   ]   | End+; |
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
@@ -345,9 +345,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
     _______, MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, _______, _______, KC_LPRN, KC_RPRN, KC_DEL,
-    HY_TAB,  KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_D, KC_LPRN, KC_RPRN, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_DQUO,
+    HY_TAB,  KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_D, KC_LPRN, KC_RPRN, KC_UNDS, KC_PIPE, KC_LCBR, KC_RCBR, KC_DQUO,
     KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_LCBR, KC_RCBR, KC_MINS, _______, KC_LBRC, KC_RBRC, TR_SCLN,
-    _______, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   KC_LBRC, KC_RBRC, KC_EQL,  KC_LABK, KC_RABK, KC_BSLS, TR_COMM,
+    OS_LSFT, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   KC_LBRC, KC_RBRC, KC_EQL,  KC_LABK, KC_RABK, KC_BSLS, TR_COMM,
     _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
@@ -368,7 +368,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
     KC_ESC,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_BSPC,
     KC_GRV,  _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, KC_PGUP,
-    _______, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   _______, _______, _______, KC_HOME, KC_END,  KC_PIPE, KC_PGDN,
+    KC_LSFT, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   _______, _______, _______, KC_HOME, KC_END,  KC_PIPE, KC_PGDN,
     _______, _______, _______, _______, _______, KC_UNDS, KC_UNDS, _______, KC_MUTE, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
