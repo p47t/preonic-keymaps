@@ -278,6 +278,7 @@ enum preonic_keycodes {
     BACKLIT,
     TRAILING_SEMICOLON,
     TRAILING_COMMA,
+    RIGHT_ARROW,
     MACKEY1,
     MACKEY2,
     MACKEY3,
@@ -299,6 +300,7 @@ enum preonic_keycodes {
 
 #define TR_SCLN TRAILING_SEMICOLON
 #define TR_COMM TRAILING_COMMA
+#define TR_RARR RIGHT_ARROW
 
 #define CMD_Z LGUI(KC_Z)
 #define CMD_X LGUI(KC_X)
@@ -319,7 +321,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+-------+-------+-------+-------+-------|-------+-------+-------+-------+-------+-------|
  * | Shift |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |   ,   |   .   |   /   | Shift |
  * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
- * | Magic | Ctrl (| Alt [ | GUI { |Lower  |     Space     | Raise | Left  | Down  |  Up   | Right |
+ * | Magic | Ctrl (| Alt [ | GUI { | Lower |     Space     | Raise | Left  | Down  |  Up   | Right |
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_QWERTY] = LAYOUT_preonic_grid(
@@ -348,7 +350,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     HY_TAB,  KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_D, KC_LPRN, KC_RPRN, KC_UNDS, KC_PIPE, KC_LCBR, KC_RCBR, KC_DQUO,
     KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_LCBR, KC_RCBR, KC_MINS, _______, KC_LBRC, KC_RBRC, TR_SCLN,
     OS_LSFT, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   KC_LBRC, KC_RBRC, KC_EQL,  KC_LABK, KC_RABK, KC_BSLS, TR_COMM,
-    _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, KC_MINS, KC_MINS, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+    _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, TR_RARR, TR_RARR, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
 /* Raise
@@ -444,6 +446,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case TRAILING_COMMA:
         if (record->event.pressed) {
             SEND_STRING(SS_TAP(X_END)",");
+            return false;
+        }
+        break;
+    case RIGHT_ARROW:
+        if (record->event.pressed) {
+            SEND_STRING("->");
             return false;
         }
         break;
