@@ -15,7 +15,6 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "audio.h"
 #include "muse.h"
 
 #if __has_include("macros.h")
@@ -26,6 +25,7 @@
 #define MACRO_STRING3 ""
 #define MACRO_STRING4 ""
 #define MACRO_STRING5 ""
+#define MACRO_STRING6 ""
 #endif
 
 // Tap dance
@@ -56,7 +56,7 @@ static struct t_tap {
 /* Sentinel value for invalid tap dance exit */
 #define TAP_DANCE_NO_MATCH 64
 
-tap_state_t get_tapdance_state(qk_tap_dance_state_t *state) {
+tap_state_t get_tapdance_state(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) {
             return SINGLE_TAP;
@@ -84,7 +84,7 @@ tap_state_t get_tapdance_state(qk_tap_dance_state_t *state) {
     }
 }
 
-void td_quotes_finished(qk_tap_dance_state_t *state, void *user_data) {
+void td_quotes_finished(tap_dance_state_t *state, void *user_data) {
     qk_tap_state.quotes = get_tapdance_state(state);
     switch (qk_tap_state.quotes) {
         case SINGLE_TAP:
@@ -105,7 +105,7 @@ void td_quotes_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void td_quotes_reset(qk_tap_dance_state_t *state, void *user_data) {
+void td_quotes_reset(tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.quotes) {
         case SINGLE_TAP:
         case SINGLE_HOLD:
@@ -127,7 +127,7 @@ void td_quotes_reset(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.quotes = 0;
 }
 
-void td_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
+void td_grave_finished(tap_dance_state_t *state, void *user_data) {
     qk_tap_state.grave = get_tapdance_state(state);
     switch (qk_tap_state.grave) {
         case SINGLE_TAP:
@@ -149,7 +149,7 @@ void td_grave_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
+void td_grave_reset(tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.grave) {
         case SINGLE_TAP:
         case SINGLE_HOLD:
@@ -170,7 +170,7 @@ void td_grave_reset(qk_tap_dance_state_t *state, void *user_data) {
     qk_tap_state.grave = 0;
 }
 
-void td_magic_finished(qk_tap_dance_state_t *state, void *user_data) {
+void td_magic_finished(tap_dance_state_t *state, void *user_data) {
     qk_tap_state.magic = get_tapdance_state(state);
     switch (qk_tap_state.magic) {
         case SINGLE_TAP: {
@@ -196,7 +196,7 @@ void td_magic_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void td_magic_reset(qk_tap_dance_state_t *state, void *user_data) {
+void td_magic_reset(tap_dance_state_t *state, void *user_data) {
     switch (qk_tap_state.magic) {
         case SINGLE_TAP:
         case DOUBLE_TAP:
@@ -227,7 +227,7 @@ enum tapdance_keycodes {
 };
 
 // Tap Dance Definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     // once: single quote, twice: double quote, thrice: backtick
     [TD_QUOTES] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_quotes_finished, td_quotes_reset),
 
@@ -284,6 +284,7 @@ enum preonic_keycodes {
     MACKEY3,
     MACKEY4,
     MACKEY5,
+    MACKEY6,
 };
 
 #define MT_LSFT MT(MOD_LSFT, KC_MINUS)
@@ -346,7 +347,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------------------'
  */
 [LAYER_LOWER] = LAYOUT_preonic_grid(
-    _______, MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, _______, _______, _______, KC_LPRN, KC_RPRN, KC_DEL,
+    _______, MACKEY1, MACKEY2, MACKEY3, MACKEY4, MACKEY5, MACKEY6, _______, _______, KC_LPRN, KC_RPRN, KC_DEL,
     HY_TAB,  KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_D, KC_LPRN, KC_RPRN, KC_UNDS, KC_PIPE, KC_LCBR, KC_RCBR, KC_DQUO,
     KC_TILD, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, KC_LCBR, KC_RCBR, KC_MINS, _______, KC_LBRC, KC_RBRC, TR_SCLN,
     OS_LSFT, CMD_Z,   CMD_X,   CMD_C,   CMD_V,   KC_LBRC, KC_RBRC, KC_EQL,  KC_LABK, KC_RABK, KC_BSLS, TR_COMM,
@@ -390,8 +391,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [LAYER_ADJUST] = LAYOUT_preonic_grid(
     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11,  KC_F12,
     _______, QK_BOOT, DB_TOGG, _______, _______, _______, _______, _______, _______,  _______, _______, KC_DEL,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, _______, _______,
-    _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______,  _______, _______, _______,
+    _______, _______, _______,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, _______,  _______, _______, _______,
+    _______, _______, _______,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______,  _______, _______, _______,
     BACKLIT, _______, _______, _______, _______, _______, _______, _______, _______,  DT_DOWN, DT_UP,   DT_PRNT
 )
 
@@ -485,6 +486,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         }
         break;
+    case MACKEY6:
+      if (record->event.pressed) {
+        send_string_with_delay_P(MACRO_STRING6, 10);
+        return false;
+      }
+      break;
     }
     return true;
 }
